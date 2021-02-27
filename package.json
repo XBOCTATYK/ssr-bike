@@ -1,0 +1,38 @@
+{
+  "name": "mongo-test",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./server.js",
+    "build": "webpack --watch --config ./configs/webpack.config.server.dev.js"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mongodb": "^3.6.4",
+    "morgan": "~1.9.1",
+    "node-sass-middleware": "0.11.0"
+  },
+  "devDependencies": {
+    "axios": "^0.21.1",
+    "nodemon": "^2.0.7",
+    "@babel/core": "^7.12.17",
+    "@babel/preset-env": "^7.12.17",
+    "@babel/preset-react": "^7.12.13",
+    "css-loader": "^5.0.2",
+    "sass-loader": "^11.0.1",
+    "file-loader": "^6.2.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
