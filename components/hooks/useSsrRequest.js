@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/server';
 
-let globalDataLink = null;
+let globalData = null;
 const requestFuncCollection = {};
 
 class ssrVar {
@@ -24,7 +24,7 @@ class ssrVar {
 const results = {};
 
 export function SSRLink(link) {
-    globalDataLink = JSON.parse(link);
+    globalData = JSON.parse(link);
 }
 
 export function useSsrRequest(func) {
@@ -34,7 +34,7 @@ export function useSsrRequest(func) {
 
     results[hash] = ssrV;
 
-    return hash;
+    return (globalData && globalData[hash]) || hash;
 }
 
 export async function valuesOnServer(string) {
