@@ -10,13 +10,13 @@ const { NODE_ENV } = process.env;
 
 const cssModuleRegex = /\.module\.scss$/;
 
-module.exports = {
+const getConfig = (entry, output) => ({
     mode: NODE_ENV || 'development',
     target: 'node',
     stats: {
         outputPath: true
     },
-    entry: './app.js',
+    entry,
     module: {
         rules: [
             {
@@ -88,11 +88,7 @@ module.exports = {
             }
         ],
     },
-    output: {
-        filename: 'server.js',
-        path: buildPath,
-        publicPath: '/assets/'
-    },
+    output,
     resolve: commonWebpackConfig.resolve,
     plugins: [
         // ignore the error: Error: Can't resolve 'pg-native'
@@ -103,4 +99,17 @@ module.exports = {
         // this WILL include `jquery` and `webpack/hot/dev-server` in the bundle, as well as `lodash/*`
         allowlist: []
     })],
-};
+});
+
+module.exports = [
+    getConfig('./app.js', {
+        filename: 'server.js',
+        path: buildPath,
+        publicPath: '/assets/'
+    }),
+    getConfig('./client/app.js', {
+        filename: 'assets/client.js',
+        path: buildPath,
+        publicPath: '/assets/'
+    })
+];

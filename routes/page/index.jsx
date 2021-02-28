@@ -7,7 +7,7 @@ const { GameList } = require('../../components/game-list/game-list');
 let router = express.Router();
 
 router.get('/', async function (req, res) {
-    const app = ReactDOM.renderToString(<div>hello! maan<GameList /></div>)
+    const app = ReactDOM.renderToString(<div id="app">hello!<GameList /></div>)
 
     const [appWithRequests, data] = await valuesOnServer(app);
 
