@@ -12,9 +12,17 @@ export const GameList = () => {
         return <div className='uuul'>{ JSON.stringify(res.data, null, '  ') }</div>
     })
 
+    const boom = React.useMemo(() => useSsrRequest(async () => {
+        const GameApi = new ClientApi(axios);
+        const res = await GameApi.getList();
+
+        return <div className='uuul'>{ JSON.stringify(res.data, null, '  ') }</div>
+    }), [])
+
     return (
         <pre>
             { result }
+            { boom }
         </pre>
     )
 };
