@@ -56,7 +56,7 @@ module.exports = app;
 
 
 
-/*// Connection URL
+// Connection URL
 const url = 'mongodb://localhost:27017';
 
 // Database Name
@@ -66,13 +66,16 @@ const dbName = 'myproject';
 const client = new MongoClient(url);
 
 // Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
+client.connect(async function(err) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
 
+  const clientSession = client.startSession();
+
+  const info = await db.collections(clientSession, (res) => { console.log(res)})
+  console.log(info)
   client.close();
-});*/
+});
 
 app.listen(3000);
