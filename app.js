@@ -57,25 +57,32 @@ module.exports = app;
 
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb://localhost:27017?poolSize=10&writeConcern=majority';
 
 // Database Name
 const dbName = 'myproject';
 
 // Create a new MongoClient
-const client = new MongoClient(url);
+const client = new MongoClient(url, { useNewUrlParser: true });
 
 // Use connect method to connect to the Server
-client.connect(async function(err) {
+
+const DEFAULT_CONFIG = {
+  maxCount: 2
+}
+
+client.connect().then(async function(err) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
 
-  const clientSession = client.startSession();
+  const config = await db.collection('config').findOne({ _id: 'main' });
 
-  const info = await db.collections(clientSession, (res) => { console.log(res)})
-  console.log(info)
-  client.close();
+  if (!config) {
+      await db.collection('config').insertOne({ _id: 'main', ...DEFAULT_CONFIG })
+  }
+
+  await client.close();
 });
 
 app.listen(3000);
