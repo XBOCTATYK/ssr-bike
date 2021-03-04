@@ -10,9 +10,9 @@ const { NODE_ENV } = process.env;
 
 const cssModuleRegex = /\.module\.scss$/;
 
-const getConfig = (entry, output) => ({
+const getConfig = (entry, output, target, externals) => ({
     mode: NODE_ENV || 'development',
-    target: 'node',
+    target: target,
     stats: {
         outputPath: true
     },
@@ -25,7 +25,7 @@ const getConfig = (entry, output) => ({
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            ['@babel/preset-env', { targets: "defaults" }],
+                            '@babel/preset-env',
                             '@babel/preset-react',
                         ]
                     }
@@ -90,15 +90,7 @@ const getConfig = (entry, output) => ({
     },
     output,
     resolve: commonWebpackConfig.resolve,
-    plugins: [
-        // ignore the error: Error: Can't resolve 'pg-native'
-        // solution from here - https://github.com/serverless-heaven/serverless-webpack/issues/78#issuecomment-405646040
-        new webpack.IgnorePlugin(/^pg-native$/)
-    ],
-    externals: [nodeExternals({
-        // this WILL include `jquery` and `webpack/hot/dev-server` in the bundle, as well as `lodash/*`
-        allowlist: []
-    })],
+    externals,
 });
 
 module.exports = [
@@ -106,10 +98,13 @@ module.exports = [
         filename: 'server.js',
         path: buildPath,
         publicPath: '/assets/'
-    }),
+    }, 'node', [nodeExternals({
+    // this WILL include `jquery` and `webpack/hot/dev-server` in the bundle, as well as `lodash/*`
+    allowlist: []
+})],),
     getConfig('./client/app.js', {
         filename: 'assets/client.js',
         path: buildPath,
         publicPath: '/assets/'
-    })
+    }, 'web', undefined)
 ];

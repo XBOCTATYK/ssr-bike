@@ -7,7 +7,7 @@ const { GameList } = require('../../components/game-list/game-list');
 let router = express.Router();
 
 router.get('/', async function (req, res) {
-    const app = ReactDOM.renderToString(<div id="app">hello!<GameList /></div>)
+    const app = ReactDOM.renderToString(<div id="app"><GameList /></div>)
 
     const [appWithRequests, data] = await valuesOnServer(app);
 
@@ -22,8 +22,8 @@ router.get('/', async function (req, res) {
         hello!
             ${appWithRequests}
         </body>
-        <script src="/assets/client.js"></script>
         <script> window.__data__ = ${JSON.stringify(data)}</script>
+        <script src="/assets/client.js"></script>
     </html>
     `);
     res.end()

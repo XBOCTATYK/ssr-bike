@@ -5,6 +5,7 @@ import ClientApi from '../../client-api/game-list/client-api';
 import { useSsrRequest } from '../hooks/useSsrRequest';
 
 export const GameList = () => {
+    const [state, setState] = React.useState('1')
     const result = useSsrRequest(async () => {
         const GameApi = new ClientApi(axios);
         const res = await GameApi.getList();
@@ -23,6 +24,7 @@ export const GameList = () => {
         <pre>
             { result }
             { boom }
+            { state }
         </pre>
     )
 };

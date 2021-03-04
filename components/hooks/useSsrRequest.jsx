@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom/server';
 import md5 from 'js-md5';
 
@@ -7,7 +8,7 @@ const requestFuncCollection = new Map();
 const results = {};
 
 export function SSRLink(link) {
-    globalData = JSON.parse(link);
+    globalData = link;
 }
 
 export function useSsrRequest(func) {
@@ -19,26 +20,31 @@ export function useSsrRequest(func) {
 
     results[hash] = null;
 
-    return (globalData && globalData[hash]) || hash;
+    if (globalData && globalData[hash]) {
+        const el = globalData[hash];
+
+        return <el.type { ...el.props } />;
+    }
+
+    return hash;
 }
 
 export async function valuesOnServer(string) {
     let currentString = string;
 
-    console.log(requestFuncCollection)
-
     for (let item of requestFuncCollection) {
         const [key, func] = item;
         let res = await func();
+        let stringRes = null;
 
         if (res['$$typeof']) {
-            res = ReactDOM.renderToString(res);
+            stringRes = ReactDOM.renderToString(res);
         }
 
         results[key] = res;
 
         const replaceRegexp = new RegExp(key, 'g')
-        currentString = currentString.replace(replaceRegexp, res && res.toString())
+        currentString = currentString.replace(replaceRegexp, stringRes && stringRes.toString())
     }
 
     return [ currentString, results ];
