@@ -36,7 +36,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/pages', indexPageRoute);
 app.use('/api/game-list', gameListRoute);
-app.use('/assets/{id}', gameListRoute);
+app.use('/assets', assetsRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

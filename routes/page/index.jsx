@@ -22,6 +22,7 @@ router.get('/', async function (req, res) {
         hello!
             ${appWithRequests}
         </body>
+        <script src="/assets/client.js"></script>
         <script> window.__data__ = ${JSON.stringify(data)}</script>
     </html>
     `);

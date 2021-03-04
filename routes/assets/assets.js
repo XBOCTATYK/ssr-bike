@@ -1,12 +1,27 @@
 const express = require('express');
+const path = require('path');
 
 let router = express.Router();
 
-router.get('/', function (req, res) {
-    console.log(__dirname)
-    console.log(req.params)
+router.get('/:filePath', function (req, res) {
+    const { filePath } = req.params;
 
-    res.end();
+    const options = {
+        root: path.join(__dirname, 'assets'),
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    }
+
+    res.sendFile(filePath, options, (err) => {
+        if (err) {
+            console.log(err);
+        }
+
+        res.end();
+    })
 })
 
 module.exports = router;
