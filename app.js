@@ -1,17 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var sassMiddleware = require('node-sass-middleware');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const sassMiddleware = require('node-sass-middleware');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 require('babel-polyfill');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var indexPageRoute = require('./routes/page/index');
-var gameListRoute = require('./routes/api/game-list');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const indexPageRoute = require('./routes/page/index');
+const gameListRoute = require('./routes/api/game-list');
+const assetsRoute = require('./routes/assets/assets');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/pages', indexPageRoute);
 app.use('/api/game-list', gameListRoute);
+app.use('/assets/{id}', gameListRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
