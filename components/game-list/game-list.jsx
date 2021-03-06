@@ -6,12 +6,19 @@ import { useSsrRequest } from '../hooks/use-ssr-request';
 
 export const GameList = () => {
     const [state, setState] = React.useState('1')
-    const result = useSsrRequest(async () => {
+
+    const getList = async () => {
         const GameApi = new ClientApi(axios);
         const res = await GameApi.getList();
 
         return <div className='uuul'>{ JSON.stringify(res.data, null, '  ') }</div>
-    })
+    };
+
+    const [res, setRes] = React.useState(useSsrRequest(getList));
+
+    React.useEffect(() => {
+        getList().then( res => setRes(res));
+    }, [])
 
     const boom = React.useMemo(() => useSsrRequest(async () => {
         const GameApi = new ClientApi(axios);
@@ -24,7 +31,7 @@ export const GameList = () => {
 
     return (
         <pre>
-            { result }
+            { res }
             { boom }
             { state }
         </pre>
