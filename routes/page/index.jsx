@@ -1,7 +1,7 @@
 const express = require('express');
 const React = require('react');
 const ReactDOM = require('react-dom/server');
-const { valuesOnServer } = require('../../components/hooks/useSsrRequest');
+const { valuesOnServer } = require('../../components/hooks/use-ssr-request');
 const { GameList } = require('../../components/game-list/game-list');
 
 let router = express.Router();

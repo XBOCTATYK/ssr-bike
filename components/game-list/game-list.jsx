@@ -20,6 +20,8 @@ export const GameList = () => {
         return <div className='uuul'>{ JSON.stringify(res.data, null, '  ') }</div>
     }), [])
 
+    setTimeout(() => setState('2'), 400)
+
     return (
         <pre>
             { result }
