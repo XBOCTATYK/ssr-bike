@@ -46,6 +46,8 @@ export async function valuesOnServer(string) {
 
         if (res['$$typeof']) {
             stringRes = ReactDOM.renderToString(res);
+        } else {
+            stringRes = res;
         }
 
         results[key] = res;
