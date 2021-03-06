@@ -17,7 +17,7 @@ export const GameList = () => {
         const GameApi = new ClientApi(axios);
         const res = await GameApi.getList();
 
-        return <div className='uuul'>{ JSON.stringify(res.data, null, '  ') }</div>
+        return JSON.stringify(res.data, null, '  ');
     }), [])
 
     setTimeout(() => setState('2'), 400)

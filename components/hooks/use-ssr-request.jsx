@@ -23,10 +23,17 @@ export function useSsrRequest(func) {
     if (globalData && globalData[hash]) {
         const el = globalData[hash];
 
-        return <el.type { ...el.props } />;
+        if (el.type && el.props) {
+            return <el.type { ...el.props } />;
+        }
+
+        return el;
     }
 
-    return hash;
+    if (typeof window === 'undefined') {
+        return hash;
+    }
+
 }
 
 export async function valuesOnServer(string) {
