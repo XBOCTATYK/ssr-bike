@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import ClientApi from '../../client-api/game-list/client-api';
-import { useSsrRequest } from '../hooks/useSsrRequest';
+import { useSsrRequest } from '../hooks/use-ssr-request';
 
 export const GameList = () => {
     const [state, setState] = React.useState('1')
